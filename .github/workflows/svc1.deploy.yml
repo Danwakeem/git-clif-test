@@ -58,7 +58,7 @@ jobs:
         run: |
           yarn package
           zip -r sls-release.zip .serverless
-          notes=$(echo -e "${{ steps.git-cliff.outputs.content }}" | sed '/## \[unreleased\]/,+1d')
+          notes=$(echo -e ${{ steps.git-cliff.outputs.content }} | sed '/## \[unreleased\]/,+1d')
           echo "notes=$notes" >> $GITHUB_OUTPUT
       - name: Create Release
         uses: svenstaro/upload-release-action@v2
