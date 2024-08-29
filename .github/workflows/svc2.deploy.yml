@@ -55,7 +55,7 @@ jobs:
       - name: Create Release
         uses: svenstaro/upload-release-action@v2
         with:
-          file: sls-release.zip
+          file: backends/svc2/sls-release.zip
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           release_name: svc2-${{ github.ref }}
           tag: svc2-${{ github.ref }}
