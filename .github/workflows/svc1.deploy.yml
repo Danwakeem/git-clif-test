@@ -54,12 +54,9 @@ jobs:
         env:
           OUTPUT: CHANGELOG.md
       - name: Package Release
-        id: release-package
         run: |
           yarn package
           zip -r sls-release.zip .serverless
-          notes=$(echo -e ${{ steps.git-cliff.outputs.content }} | sed '/## \[unreleased\]/,+1d')
-          echo "notes=$notes" >> $GITHUB_OUTPUT
       - name: Create Release
         uses: svenstaro/upload-release-action@v2
         with:
@@ -67,4 +64,4 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           release_name: svc1-${{ steps.vars.outputs.sha_short }}
           tag: svc1-${{ steps.vars.outputs.sha_short }}
-          body: ${{ steps.release-package.outputs.notes }}
+          body: ${{ steps.git-cliff.outputs.content }}
