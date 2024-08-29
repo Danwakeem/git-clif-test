@@ -52,6 +52,7 @@ jobs:
         run: |
           yarn package
           zip -r sls-release.zip .serverless
+          ls -la
       - name: Create Release
         uses: svenstaro/upload-release-action@v2
         with:
