@@ -50,7 +50,7 @@ jobs:
         id: git-cliff
         with:
           config: cliff.toml
-          args: ${{ steps.last-commit.outputs.last_commit }}..HEAD --include-path "backends/svc1/**/*"
+          args: ${{ steps.last-commit.outputs.last_commit }}..HEAD --include-path "backends/svc1/**/*" -t svc1-${{ steps.vars.outputs.sha_short }}
         env:
           OUTPUT: CHANGELOG.md
       - name: Package Release

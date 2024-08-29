@@ -50,7 +50,7 @@ jobs:
         uses: orhun/git-cliff-action@v4
         with:
           config: cliff.toml
-          args: ${{ steps.last-commit.outputs.last_commit }}..HEAD --include-path "backends/svc2/**/*"
+          args: ${{ steps.last-commit.outputs.last_commit }}..HEAD --include-path "backends/svc2/**/*" -t svc2-${{ steps.vars.outputs.sha_short }}
         env:
           OUTPUT: CHANGELOG.md
       - name: Package Release
