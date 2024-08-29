@@ -21,6 +21,9 @@ defaults:
 jobs:
   git-cliff-action:
     runs-on: ubuntu-latest
+    concurrency:
+      group: svc1
+      cancel-in-progress: true
     name: SVC1 Release
     steps:
       - name: Checkout
@@ -53,6 +56,9 @@ jobs:
           args: ${{ steps.last-commit.outputs.last_commit }}..HEAD --include-path "backends/svc1/**/*"
         env:
           OUTPUT: CHANGELOG.md
+      - name: Wait
+        environment: wait10
+        run: echo "Waited"
       - name: Package Release
         run: |
           yarn package
