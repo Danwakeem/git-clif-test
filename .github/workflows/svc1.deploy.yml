@@ -40,5 +40,15 @@ jobs:
           args: ${{ steps.last-commit.outputs.last_commit }}..HEAD --include-path "backends/svc1/**/*"
         env:
           OUTPUT: CHANGELOG.md
-      - name: Print the changelog
-        run: echo "${{steps.git-cliff.outputs.content}}"
+      - name: Package Release
+        run: |
+          yarn package
+          zip -r sls-release.zip .serverless
+      - name: Create Release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          file: sls-release.zip
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          release_name: svc1-${{ github.ref }}
+          tag: svc1-${{ github.ref }}
+          body: ${{ steps.git-cliff.outputs.content }}
