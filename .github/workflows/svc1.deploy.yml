@@ -26,7 +26,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 50
       - name: Find Last Commit
         id: last-commit
         run: |
@@ -37,7 +37,7 @@ jobs:
         id: git-cliff
         with:
           config: cliff.toml
-          args: ${{ steps.last-commit.outputs.last_commit }}..HEAD --include-path "backends/svc1/**/*" --repository "../../"
+          args: ${{ steps.last-commit.outputs.last_commit }}..HEAD --include-path "backends/svc1/**/*"
         env:
           OUTPUT: CHANGELOG.md
       - name: Print the changelog
