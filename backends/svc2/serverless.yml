@@ -1,5 +1,5 @@
 service: svc1
-frameworkVersion: '4'
+frameworkVersion: '3'
 
 provider:
   name: aws
