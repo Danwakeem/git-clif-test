@@ -37,6 +37,7 @@ jobs:
         with:
           node-version: 20
           cache: 'yarn'
+          cache-dependency-path: backends/svc2/yarn.lock
       - name: Install
         run: yarn install
       - name: Find Last Commit
