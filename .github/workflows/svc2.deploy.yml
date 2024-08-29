@@ -41,6 +41,6 @@ jobs:
         env:
           OUTPUT: CHANGELOG.md
       - name: Print the changelog
-        run: echo "${{toJSON(steps.git-cliff.outputs)}}"
+        run: echo "${{steps.git-cliff.outputs.content}}"
       # - name: Print the version
       #   run: echo "${{ steps.git-cliff.outputs.version }}"
