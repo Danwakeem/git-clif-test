@@ -43,7 +43,7 @@ jobs:
       - name: Find Last Commit
         id: last-commit
         run: |
-          last_commit=$(git log --reverse --ancestry-path $(git describe --tags --match 'svc1*' --abbrev=0)..HEAD | head -n 1 | sed 's/commit //')
+          last_commit=$(git describe --tags --match 'svc1*' --abbrev=0 | awk -F'-' '{print $NF}')
           echo "last_commit=$last_commit" >> $GITHUB_OUTPUT
       - name: Generate a changelog
         uses: orhun/git-cliff-action@v4
