@@ -1,5 +1,2 @@
-[bump]
-initial_tag = "1.0.0"
-
 [git]
 conventional_commits = true
