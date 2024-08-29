@@ -1,0 +1,46 @@
+name: SVC2
+
+permissions:
+  id-token: write
+  contents: write
+  pull-requests: write
+  packages: read
+
+on:
+  push:
+    branches: 
+      - main
+    paths:
+      - "backends/svc2/**"
+      - ".github/workflows/svc2.deploy.yml"
+
+defaults:
+  run:
+    working-directory: backends/svc2
+
+jobs:
+  git-cliff-action:
+    runs-on: ubuntu-latest
+    name: Test the git-cliff changelog generator action
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Find Last Commit
+        id: last-commit
+        run: |
+          last_commit=$(git log --reverse --ancestry-path $(git describe --tags --match 'svc2*' --abbrev=0)..HEAD | head -n 1 | sed 's/commit //')
+          echo "last_commit=$last_commit" >> $GITHUB_OUTPUT
+      - name: Generate a changelog
+        id: git-cliff
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: ${{ steps.last-commit.outputs.last_commit }}..HEAD --include-path "backends/svc2/**/*" --repository "../../"
+        env:
+          OUTPUT: CHANGELOG.md
+      - name: Print the changelog
+        run: cat "${{ steps.git-cliff.outputs.changelog }}"
+      - name: Print the version
+        run: echo "${{ steps.git-cliff.outputs.version }}"
