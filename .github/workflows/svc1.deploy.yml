@@ -65,3 +65,5 @@ jobs:
           release_name: svc1-${{ steps.vars.outputs.sha_short }}
           tag: svc1-${{ steps.vars.outputs.sha_short }}
           body: ${{ steps.git-cliff.outputs.content }}
+      - name: Publish Summary
+        run: echo '${{ steps.git-cliff.outputs.content }}' >> $GITHUB_STEP_SUMMARY
